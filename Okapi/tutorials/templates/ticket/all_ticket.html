@@ -1,0 +1,59 @@
+{% extends 'base_content.html' %}
+{% block content %}
+<div class="container">
+  <div class="row">
+    <div class="col-12">
+
+      <div class="list-group">
+        <div class="d-flex justify-content-between">
+          <h4>Tickets:</h4>
+            {% if current_user.role == "Student" %}
+                <a class="mb-3 btn btn-primary" href="{% url 'open_ticket' %}">Open New Ticket</a>
+            {% endif %}
+        </div>
+
+        {% for ticket in tickets %}
+            {% if ticket.is_close %}
+                <div class="list-group-item bg-danger bg-opacity-10 ">
+            {% else %}
+                <div class="list-group-item bg-success bg-opacity-10">
+            {% endif %}
+          <div class="d-flex justify-content-between">
+            <div class="flex-grow-1">{{ticket.title}}</div>
+            {% if request.user.role == 'Admin' %}
+              <div style="width: 200px" class="mx-1">From: {{ticket.student.first_name}} {{ ticket.student.last_name }}</div>
+            {% endif %}
+            <div style="width: 200px" class="mx-1">Date: {{ticket.date}}</div>
+            <div style="width: 150px" class="mx-1">
+                {% if ticket.is_close %}
+                    Closed
+                {% else %}
+                    Open
+                {% endif %}
+            </div>
+            <div style="width: 150px" class="mx-1">
+
+                <a class="btn btn-dark position-relative" href="{% url 'ticket_details' ticket.id %}">
+                    Open
+                    {% if not ticket.is_close %}
+                        <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
+                            {% if ticket.unread_msg_count %}
+                                {{ ticket.unread_msg_count }}
+                            {% else %}
+                                0
+                            {% endif %}
+                        <span class="visually-hidden">unread messages</span>
+                      </span>
+                    {% endif %}
+                </a>
+            </div>
+          </div>
+        </div>
+        {% endfor %}
+      </div>
+
+      <br>
+    </div>
+  </div>
+</div>
+{% endblock %}

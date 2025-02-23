@@ -1,0 +1,18 @@
+{% extends 'base_content.html' %}
+{% block content %}
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-12 col-md-12 offset-md-1">
+                <br>
+                <br>
+                <h3>Make a new request:</h3>
+                {% include 'sessions/courses_list.html' %}
+                <br>
+                <br>
+                <h3>Previous requests:</h3>
+                {% include 'students/prev_reqs.html' %}
+            </div>
+        </div>
+    </div>
+{% endblock %}
+

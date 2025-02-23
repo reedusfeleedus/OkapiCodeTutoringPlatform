@@ -1,0 +1,61 @@
+{% extends 'base_content.html' %}  <!-- Extending base_content.html will implicitly extend base.html -->
+
+{% block content %}
+{% if user.role == "Admin" %}
+<div class="container mt-6">
+    <h1> Admin Dashboard {{ user.username }}</h1>
+    <div class="row">
+        <div class="col-md-4">
+            <div class="card text-white bg-primary mb-3">
+                <div class="card-body">
+                    <h5 class="card-title"> Students </h5>
+                    <p class="card-text">  {{students_count}} active</p>
+                </div>
+            </div>
+        </div>
+        <!--
+        <div class="col-md-4">
+            <div class="card text-white bg-primary mb-3">
+                <div class="card-body">
+                    <h5 class="card-title"> Lessons </h5>
+                    <p class="card-text"> {{lessons_count}} scheduled</p>
+                </div>
+            </div>
+        </div>
+        --> 
+        <div class="col-md-4">
+            <div class="card text-white bg-primary mb-3">
+                <div class="card-body">
+                    <h5 class="card-title"> Tutors </h5>
+                    <p class="card-text"> {{tutors_count}} available</p>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="card text-white bg-primary mb-3">
+                <div class="card-body">
+                    <h5 class="card-title"> Unpaid Invoices </h5>
+                    <p class="card-text"> {{unpaid_invoices_count}} pending</p>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="card text-white bg-primary mb-3">
+                <div class="card-body">
+                    <h5 class="card-title"> <a style="color:white; text-decoration: none" href="{%  url 'course_list' %}">Courses →</a> </h5>
+                    <p class="card-text"> {{courses_count}} available</p>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="card text-white bg-primary mb-3">
+                <div class="card-body">
+                    <h5 class="card-title"> <a style="color:white; text-decoration: none" href="{% url 'admin.request.list' %}" >Requests →</a> </h5>
+                    <p class="card-text"> {{request_count}} pending</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endif %}
+{% endblock %}

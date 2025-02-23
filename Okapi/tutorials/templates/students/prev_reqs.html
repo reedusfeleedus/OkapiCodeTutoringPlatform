@@ -1,0 +1,22 @@
+<div class="row mt-3 mb-5">
+  {% for request in requests %}
+      <div class="col-lx-3 col-lg-3 col-md-6 col-sm-12">
+          <div class="card mb-3" style="width: 18rem; min-height: 230px;">
+              <div class="card-body">
+                  <h5 class="card-title">{{ request.course.name }}</h5>
+                  <h5 class="card-subtitle mb-3 text-muted">Tutor: {{ request.tutor.first_name }} {{ request.tutor.last_name }}</h6>
+                  <h8 class="card-subtitle mb-2 text-muted">{{ request.start_date }} - {{ request.end_date }}</h8>
+                  {% if request.status == 'pending' %}
+                      <label class="mb-3 text-secondary">Status: Pending</label>
+                  {% elif request.status == 'accepted' %}
+                      <label class="mb-3 text-success">Status: Accepted</label>
+                  {% elif request.status == 'rejected' %}
+                      <label class="mb-3 text-danger">Status: Rejected</label>
+                  {% endif %}
+              </div>
+          </div>
+      </div>
+  {% empty %}
+      <p>No open requests.</p>
+  {% endfor %}
+</div>             

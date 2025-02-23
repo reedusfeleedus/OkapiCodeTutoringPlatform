@@ -1,0 +1,61 @@
+{% extends 'base_content.html' %}
+{% block content %}
+<div class="container">
+  <div class="row">
+    <div class="col-12">
+      <h1>Your invoices</h1>
+      
+      <div class="list-group">
+        <h4>Unpaid Invoices ({{ unpaid_invoices_count }}) :</h4>
+        {% for invoice in unpaid_invoices %}
+        <div class="list-group-item bg-danger bg-opacity-10">
+          <div class="d-flex justify-content-between">
+            <div class="flex-grow-1">{{invoice.course.name}}</div>
+            {% if request.user.role == 'Student' %}
+              <div style="width: 200px" class="mx-1">Tutor: {{invoice.tutor.username}}</div>
+            {% else %}
+              <div style="width: 200px" class="mx-1">Student: {{invoice.student.username}}</div>
+            {% endif %}
+            <div style="width: 200px" class="mx-1">Due Date: {{invoice.due_date}}</div>
+          <div style="width: 150px" class="mx-1">Total: {{invoice.total}}</div>
+            
+            
+            
+            
+            {% if request.user.role == 'Admin' %}
+            <form action="{% url 'mark_invoice_paid' invoice.id %}" method="POST" class="ml-2">
+                {% csrf_token %}
+                <button type="submit" class="btn btn-success btn-sm">Mark as Paid</button>
+            </form>
+            {% endif %}
+          </div>
+        </div>
+        {% endfor %}
+      </div>
+
+
+      <br>
+
+      <div class="list-group">
+        <h4>Paid Invoices:</h4>
+        {% for invoice in paid_invoices %}
+        <div class="list-group-item bg-success bg-opacity-10">
+          <div class="d-flex justify-content-between">
+            <div class="flex-grow-1">{{invoice.course.name}}</div>
+            {% if request.user.role == 'Student' %}
+              <div style="width: 200px" class="mx-1">Tutor: {{invoice.tutor.username}}</div>
+            {% else %}
+              <div style="width: 200px" class="mx-1">Student: {{invoice.student.username}}</div>
+            {% endif %}
+            <div style="width: 200px" class="mx-1">Payment Date: {{invoice.payment_date}}</div>
+            <div style="width: 150px" class="mx-1">Total: {{invoice.total}}</div>
+          </div>
+        </div>
+        {% endfor %}
+      </div>
+
+      <br>
+    </div>
+  </div>
+</div>
+{% endblock %}

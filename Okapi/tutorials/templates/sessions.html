@@ -1,0 +1,70 @@
+{% extends 'base_content.html' %}
+{% block content %}
+<div class="container">
+  <div class="row">
+    <div class="col-12">
+<!-- comment -->
+<div class = "list-group">
+    <h4>Previous Sessions:</h4>
+  {% for session in previous_sessions%}
+  <div class="list-group-item bg-secondary bg-opacity-10">
+    <div class="d-flex justify-content-between">
+      <div class="flex-grow-1">{{session.course.name}}</div>
+      <div style="width: 150px" class="mx-1">Start Date: {{session.start_date}}</div>
+        <div style="width: 150px" class="mx-1">End Date: {{session.end_date}}</div>
+      <div style="width: 20vw" class="mx-1">Time:
+          <ul>
+              {% for day,time in session.availability.items %}
+                  <li>{{ day|capfirst }} - {{ time }}</li>
+              {% endfor %}
+          </ul>
+      </div>
+    </div>
+  </div>
+  {% endfor %}
+</div>
+<br>
+<div class = "list-group">
+    <h4>Current Session:</h4>
+  {% for session in current_sessions%}
+  <div class="list-group-item bg-success bg-opacity-10">
+    <div class="d-flex justify-content-between">
+      <div class="flex-grow-1">{{session.course.name}}</div>
+        <div style="width: 150px" class="mx-1">Start Date: {{session.start_date}}</div>
+        <div style="width: 150px" class="mx-1">End Date: {{session.end_date}}</div>
+      <div style="width: 20vw" class="mx-1">Time:
+          <ul>
+              {% for day,time in session.availability.items %}
+                  <li>{{ day|capfirst }} - {{ time }}</li>
+              {% endfor %}
+          </ul>
+      </div>
+    </div>
+  </div>
+  {% endfor %}
+</div>
+<br>
+<h4>Upcoming Sessions:</h4>
+<div class = "list-group">
+  {% for session in upcoming_sessions%}
+  <div class="list-group-item bg-opacity-10">
+    <div class="d-flex justify-content-between">
+      <div class="flex-grow-1" style="width: 40vw">{{session.course.name}}</div>
+        <div style="width: 20vw" class="mx-1">Start Date: {{session.start_date}}</div>
+        <div style="width: 20vw" class="mx-1">End Date: {{session.end_date}}</div>
+      <div style="width: 20vw" class="mx-1">Time:
+          <ul>
+              {% for day,time in session.availability.items %}
+                  <li>{{ day|capfirst }} - {{ time }}</li>
+              {% endfor %}
+          </ul>
+      </div>
+    </div>
+  </div>
+  {% endfor %}
+</div>
+
+</div>
+  </div>
+</div>
+{% endblock %}

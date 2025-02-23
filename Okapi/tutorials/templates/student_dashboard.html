@@ -1,0 +1,105 @@
+
+
+<br>
+<br>
+<div class="d-flex justify-content-between">
+  <h2> Your Upcoming Sessions:</h2>
+  <a href="{% url 'all_sessions' %}">View All Upcoming Sessions</a>
+</div>
+<div class = "list-group">
+  <div class="list-group-item">
+    <div class="d-flex justify-content-between">
+      <div class="flex-grow-1">Course:</div>
+      <div style="width: 150px" class="mx-1">Date:</div>
+      <div style="width: 150px" class="mx-1">Time:</div>
+    </div>
+  </div>
+  {% for session in upcoming_sessions%}
+  <div class="list-group-item bg-success bg-opacity-10">
+    <div class="d-flex justify-content-between">
+      <div class="flex-grow-1">{{session.course.name}}</div>
+      <div style="width: 150px" class="mx-1">{{session.start_date}}</div>
+      <div style="width: 150px" class="mx-1">
+        <ul>
+              {% for day,time in session.availability.items %}
+                  <li>{{ day|capfirst }} - {{ time }}</li>
+              {% endfor %}
+          </ul>
+      </div>
+    </div>
+  </div>
+  {% endfor %}
+</div>
+
+
+<!-- Dummy to develop without real data -->
+<!-- <div class = "list-group">
+  <div class="list-group-item bg-success bg-opacity-10">
+    <div class="d-flex justify-content-between">
+      <div class="flex-grow-1">Python (Dummy Data)</div>
+      <div style="width: 150px" class="mx-1">10/08/2000</div>
+      <div  style="width: 150px"class="mx-1">10 AM</div>
+    </div>
+  </div>
+  <div class="list-group-item">
+    <div class="d-flex justify-content-between ">
+      <div class="flex-grow-1">C++ (Dummy Data)</div>
+      <div style="width: 150px" class="mx-1">10/08/2000</div>
+      <div style="width: 150px" class="mx-1">4 PM</div>
+    </div>
+  </div>
+  <div class="list-group-item">
+    <div class="d-flex justify-content-between">
+      <div class="flex-grow-1">Java (Dummy Data)</div>
+      <div style="width: 150px" class="mx-1">11/08/2000</div>
+      <div style="width: 150px" class="mx-1">5 PM</div>
+    </div>
+  </div>
+</div>
+<div class="list-group-item">
+  <div class="d-flex justify-content-between ">
+    <div class="flex-grow-1">C++ (Dummy Data)</div>
+    <div style="width: 150px" class="mx-1">10/08/2000</div>
+    <div style="width: 150px" class="mx-1">4 PM</div>
+  </div>
+</div>
+<div class="list-group-item">
+  <div class="d-flex justify-content-between">
+    <div class="flex-grow-1">Java (Dummy Data)</div>
+    <div style="width: 150px" class="mx-1">11/08/2000</div>
+    <div style="width: 150px" class="mx-1">5 PM</div>
+  </div>
+</div>
+<div class="list-group-item">
+  <div class="d-flex justify-content-between ">
+    <div class="flex-grow-1">C++ (Dummy Data)</div>
+    <div style="width: 150px" class="mx-1">10/08/2000</div>
+    <div style="width: 150px" class="mx-1">4 PM</div>
+  </div>
+</div>
+<div class="list-group-item">
+  <div class="d-flex justify-content-between">
+    <div class="flex-grow-1">Java (Dummy Data)</div>
+    <div style="width: 150px" class="mx-1">11/08/2000</div>
+    <div style="width: 150px" class="mx-1">5 PM</div>
+  </div>
+</div>
+<div class="list-group-item">
+  <div class="d-flex justify-content-between ">
+    <div class="flex-grow-1">C++ (Dummy Data)</div>
+    <div style="width: 150px" class="mx-1">10/08/2000</div>
+    <div style="width: 150px" class="mx-1">4 PM</div>
+  </div>
+</div>
+<div class="list-group-item">
+  <div class="d-flex justify-content-between">
+    <div class="flex-grow-1">Java (Dummy Data)</div>
+    <div style="width: 150px" class="mx-1">11/08/2000</div>
+    <div style="width: 150px" class="mx-1">5 PM</div>
+  </div>
+</div> -->
+
+
+<!-- Dummy to develop without real data -->
+
+

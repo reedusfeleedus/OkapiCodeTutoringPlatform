@@ -1,0 +1,66 @@
+{% extends 'base_content.html' %}
+{% block content %}
+<div class="container">
+  <div class="row">
+    <div class="col-sm-12 col-md-6 offset-md-3">
+      <h2>Ticket: {{ ticket.title }} - {{ ticket.date }}</h2>
+
+        <div class="row mt-3 mb-5">
+          {% for message in msgs %}
+              <div class="col-12">
+                  <div class="card mb-3">
+                    {% if current_user.role.lower == message.msg_from  %}
+                      <div class="card-body bg-success bg-opacity-10">
+                      {% else %}
+                        <div class="card-body">
+                      {% endif %}
+                          <div class="d-flex justify-content-between">
+                              {% if current_user.role == "Student" %}
+                                  {% if message.msg_from == "student" %}
+                                      <h5 class="card-title">From: You</h5>
+                                  {% else %}
+                                      <h5 class="card-title">From: Admin</h5>
+                                  {% endif %}
+                              {% else %}
+                                  {% if message.msg_from == "student" %}
+                                      <h5 class="card-title">From: Student</h5>
+                                  {% else %}
+                                      <h5 class="card-title">From: Admin</h5>
+                                  {% endif %}
+                              {% endif %}
+                              <h8 class="mb-3 text-muted">{{ message.date }} - {{ message.time }}</h8>
+                          </div>
+{#                          <h8 class="card-subtitle mb-2 text-muted">{{ request.start_date }} - {{ request.end_date }}</h8>#}
+                          <p>
+                              {{ message.content }}
+                          </p>
+                      </div>
+                  </div>
+              </div>
+          {% empty %}
+              <p>No Messages.</p>
+          {% endfor %}
+        </div>
+        {% if not ticket.is_close %}
+        <div class="mb-5">
+              <form action="{% url 'ticket_details' ticket.id %}" method="post">
+                {% csrf_token %}
+                  <label for="content" class="">Response</label>
+                  <textarea class="form-control mb-3" name="content" id="content" rows="5"></textarea>
+                  {% if current_user.role == "Admin" %}
+                      <div class="form-check mb-3">
+                          <input class="form-check-input" type="checkbox" id="close_ticket" name="close_ticket">
+                          <label class="form-check-label" for="close_ticket">
+                            Close Ticket:
+                          </label>
+                      </div>
+                  {% endif %}
+                <input type="submit" value="Submit" class="btn btn-dark">
+              </form>
+        </div>
+        {% endif %}
+    </div>
+    </div>
+  </div>
+</div>
+{% endblock %}

@@ -1,0 +1,20 @@
+{% extends 'base_content.html' %}
+{% block content %}
+<div class="container">
+  <div class="row">
+    <div class="col-sm-12 col-md-6 offset-md-3">
+      <h1>Open New Ticket</h1>
+      <form action="{% url 'open_ticket' %}" method="post">
+        {% csrf_token %}
+          <label for="title" class="">Title</label>
+          <input name="title" id="title" class="form-control mb-3"/>
+
+          <label for="content" class="">Content</label>
+          <textarea class="form-control mb-3" name="content" id="content" rows="10"></textarea>
+
+        <input type="submit" value="Submit" class="btn btn-dark">
+      </form>
+    </div>
+  </div>
+</div>
+{% endblock %}

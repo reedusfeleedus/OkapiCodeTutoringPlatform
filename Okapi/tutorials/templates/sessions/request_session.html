@@ -1,0 +1,187 @@
+{% extends 'base_content.html' %}
+{% block content %}
+<br>
+<br>
+<!-- NEW WAY Pranav CREDIT TO ALI FOR Original Implementation I just made the code more modular by replacing repeated days with an array and a for loop -->
+
+<div class="container">
+    <div class="row mb-5">
+        <div class="col-sm-12 col-md-6 offset-md-3">
+            <h2>Request New Session</h2>
+            <h2>Course: {{ course.name }} </h2>
+            <form action="{% url 'request_session' course_id %}" method="post" class="mt-4">
+                {% csrf_token %}
+                <div class="row mb-4 border rounded p-3">
+                    <div class="col-xl-6 col-lg-6 col-md-6 col-sm-12">
+                        <label >Start Date</label>
+                        <input name="start_date" id="start_date" type="date" class="form-control text-uppercase form-control-sm text-muted"/>
+                    </div>
+                    <div class="col-xl-6 col-lg-6 col-md-6 col-sm-12">
+                        <label>End Date</label>
+                        <input name="end_date" id="end_date" type="date" class="form-control text-uppercase form-control-sm text-muted"/>
+                    </div>
+                </div>
+                <div class="row mb-4 border rounded p-3">
+                    {% for day in weekdays %}
+                    <div class="row mb-4 {% if not forloop.last %}border-bottom pb-3{% endif %}">
+                            <div class="col-xl-3 col-lg-3 col-md-6 col-sm-12">
+                                <div class="form-group form-check">
+                                    <input name="cb_{{ day|lower }}" type="checkbox" class="form-check-input" id="cb_{{ day|lower }}">
+                                    <label class="form-check-label" for="cb_{{ day|lower }}">{{ day }}</label>
+                                </div>
+                            </div>
+                            <div class="col-xl-9 col-lg-3 col-md-6 col-sm-12">
+                                <input name="{{ day|lower }}_time" type="time" class="form-control  w-50 ms-auto" style="display: none;">
+                            </div>
+                        </div>
+                    {% endfor %}
+                </div>
+                <input type="submit" value="Request" class="btn btn-primary float-end">
+            </form>
+
+            <script>
+                document.addEventListener("DOMContentLoaded", () => {
+                    const checkboxes = document.querySelectorAll('input[type="checkbox"]');
+
+                    checkboxes.forEach((checkbox) => {
+                        checkbox.addEventListener("change", () => {
+                            const relatedInput = document.querySelector(`input[name="${checkbox.name.replace('cb_', '')}_time"]`);
+                            if (checkbox.checked) {
+                                relatedInput.style.display = "block"; // Show the input
+                            } else {
+                                relatedInput.style.display = "none"; // Hide the input
+                            }
+                        });
+                    });
+                });
+            </script>
+        </div>
+    </div>
+</div>
+
+
+<!-- OLD WAY ALI ORIGINAL CREDIT TO ALI -->
+<!-- <div class="container">
+    <div class="row">
+        <div class="col-sm-12 col-md-6 offset-md-3">
+            <h2>Request New Session - {{ course.name }} Course</h2>
+            <form action="{% url 'request_session' course_id %}" method="post" class="mt-4">
+                {% csrf_token %}
+                <div class="row mb-4 border rounded p-3">
+                    <div class="col-xl-6 col-lg-6 col-md-6 col-sm-12">
+                        <label >Start Date</label>
+                        <input name="start_date" id="start_date" type="date" class="form-control"/>
+                    </div>
+                    <div class="col-xl-6 col-lg-6 col-md-6 col-sm-12">
+                        <label>End Date</label>
+                        <input name="end_date" id="end_date" type="date" class="form-control"/>
+                    </div>
+                </div>
+                <div class="row mb-4 border rounded p-3">
+                    <div class="row mb-4">
+                        <div class="col-xl-3 col-lg-3 col-md-6 col-sm-12">
+                            <div class="form-group form-check">
+                                <input name="cb_monday" type="checkbox" class="form-check-input" id="cb_monday">
+                                <label class="form-check-label" for="cb_monday">Monday</label>
+                            </div>
+                        </div>
+                        <div class="col-xl-9 col-lg-3 col-md-6 col-sm-12">
+                            <input name="monday_time" style="display: none" class="form-control" type="time"/>
+                        </div>
+                    </div>
+    
+                    <div class="row mb-4">
+                        <div class="col-xl-3 col-lg-3 col-md-6 col-sm-12">
+                            <div class="form-group form-check">
+                                <input name="cb_tuesday" type="checkbox" class="form-check-input" id="cb_tuesday">
+                                <label class="form-check-label" for="cb_tuesday">Tuesday</label>
+                            </div>
+                        </div>
+                        <div class="col-xl-9 col-lg-3 col-md-6 col-sm-12">
+                            <input name="tuesday_time" style="display: none" class="form-control" type="time"/>
+                        </div>
+                    </div>
+    
+                    <div class="row mb-4">
+                        <div class="col-xl-3 col-lg-3 col-md-6 col-sm-12">
+                            <div class="form-group form-check">
+                                <input name="cb_wednesday" type="checkbox" class="form-check-input" id="cb_wednesday">
+                                <label class="form-check-label" for="cb_wednesday">Wednesday</label>
+                            </div>
+                        </div>
+                        <div class="col-xl-9 col-lg-3 col-md-6 col-sm-12">
+                            <input name="wednesday_time" style="display: none" class="form-control" type="time"/>
+                        </div>
+                    </div>
+    
+                    <div class="row mb-4">
+                        <div class="col-xl-3 col-lg-3 col-md-6 col-sm-12">
+                            <div class="form-group form-check">
+                                <input name="cb_thursday" type="checkbox" class="form-check-input" id="cb_thursday">
+                                <label class="form-check-label" for="cb_thursday">Thursday</label>
+                            </div>
+                        </div>
+                        <div class="col-xl-9 col-lg-3 col-md-6 col-sm-12">
+                            <input name="thursday_time" style="display: none" class="form-control" type="time"/>
+                        </div>
+                    </div>
+    
+                    <div class="row mb-4">
+                        <div class="col-xl-3 col-lg-3 col-md-6 col-sm-12">
+                            <div class="form-group form-check">
+                                <input name="cb_friday" type="checkbox" class="form-check-input" id="cb_friday">
+                                <label class="form-check-label" for="cb_friday">Friday</label>
+                            </div>
+                        </div>
+                        <div class="col-xl-9 col-lg-3 col-md-6 col-sm-12">
+                            <input name="friday_time" style="display: none" class="form-control" type="time"/>
+                        </div>
+                    </div>
+    
+                    <div class="row mb-4">
+                        <div class="col-xl-3 col-lg-3 col-md-6 col-sm-12">
+                            <div class="form-group form-check">
+                                <input name="cb_saturday" type="checkbox" class="form-check-input" id="cb_saturday">
+                                <label class="form-check-label" for="cb_saturday">Saturday</label>
+                            </div>
+                        </div>
+                        <div class="col-xl-9 col-lg-3 col-md-6 col-sm-12">
+                            <input name="saturday_time" style="display: none" class="form-control" type="time"/>
+                        </div>
+                    </div>
+    
+                    <div class="row mb-4">
+                        <div class="col-xl-3 col-lg-3 col-md-6 col-sm-12">
+                            <div class="form-group form-check">
+                                <input name="cb_sunday" type="checkbox" class="form-check-input" id="cb_sunday">
+                                <label class="form-check-label" for="cb_sunday">Sunday</label>
+                            </div>
+                        </div>
+                        <div class="col-xl-9 col-lg-3 col-md-6 col-sm-12">
+                            <input name="sunday_time" style="display: none" class="form-control" type="time"/>
+                        </div>
+                    </div>
+                </div>
+                <input type="submit" value="Add" class="btn btn-primary">
+            </form>
+
+            <script>
+                document.addEventListener("DOMContentLoaded", () => {
+                    const checkboxes = document.querySelectorAll('input[type="checkbox"]');
+
+                    checkboxes.forEach((checkbox) => {
+                        checkbox.addEventListener("change", () => {
+                            const relatedInput = document.querySelector(`input[name="${checkbox.name.replace('cb_', '')}_time"]`);
+                            if (checkbox.checked) {
+                                relatedInput.style.display = "block"; // Show the input
+                            } else {
+                                relatedInput.style.display = "none"; // Hide the input
+                            }
+                        });
+                    });
+                });
+            </script>
+        </div>
+    </div>
+</div> -->
+{% endblock %}

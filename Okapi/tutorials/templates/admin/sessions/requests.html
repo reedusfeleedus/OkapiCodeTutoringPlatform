@@ -1,0 +1,36 @@
+{% extends 'base_content.html' %}
+{% block content %}
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-12 col-md-12 offset-md-1">
+                <h1>Students Request</h1>
+                <div class="row mt-3">
+                    {% for request in requests %}
+                        <div class="col-lx-3 col-lg-3 col-md-6 col-sm-12">
+                            <div class="card mb-3" style="width: 18rem;min-height: 200px;">
+                                <div class="card-body">
+                                    <h5 class="card-title">{{ request.course.name }}</h5>
+                                    <h6 class="card-subtitle mb-2 text-muted">student: {{ request.student.first_name }} {{ request.student.last_name }}</h6>
+                                    {% if request.status == 'pending' %}
+                                        <label class="mb-3 text-secondary">Status: N/A</label>
+                                    {% else %}
+                                         {% if request.status == 'accepted' %}
+                                            <label class="mb-3 text-success">Status: Accepted</label>
+                                        {% else %}
+                                            <label class="mb-3 text-danger">Status: Rejected</label>
+                                        {% endif %}
+                                    {% endif %}
+                                    <div class="flex">
+                                        <a href="{% url 'admin.request.details' request.id %}" class="btn btn-primary">Details</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    {% empty %}
+                        <p>No courses available at the moment.</p>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

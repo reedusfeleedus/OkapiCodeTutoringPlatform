@@ -1,0 +1,26 @@
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark mb-3">
+  <div class="container">
+    <a class="navbar-brand" href="{% url 'dashboard' %}">
+      Okapi Tutoring
+    </a>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    {% if user.is_authenticated %}
+        {% if user.role == 'Student' or user.role == 'Tutor' %}
+        <a href="{% url 'invoices' %}" class="text-white text-decoration-none ms-3 me-2">Invoices</a>
+        <a href="{% url 'all_sessions' %}" class="text-white text-decoration-none ms-2">All Sessions</a>
+          {% if user.role == "Student" %}
+                <a href="{% url 'student.requests_list' %}" class="text-white text-decoration-none ms-2">Requests</a>
+                <a href="{% url 'all_ticket' %}" class="text-white text-decoration-none ms-3 me-2">Tickets</a>
+          {% endif %}
+      {% endif %}
+      {% if user.role == 'Admin' %}
+        <a href="{% url 'invoices' %}" class="text-white text-decoration-none ms-3 me-2">Invoices</a>
+          <a href="{% url 'course.create' %}" class="text-white text-decoration-none ms-3 me-2">Add Course</a>
+          <a href="{% url 'all_ticket' %}" class="text-white text-decoration-none ms-3 me-2">Tickets</a>
+      {% endif %}
+      {% include 'partials/menu.html' %}
+    {% endif %}
+  </div>
+</nav>

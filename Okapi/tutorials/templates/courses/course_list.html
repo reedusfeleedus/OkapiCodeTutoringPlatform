@@ -1,0 +1,29 @@
+{% extends 'base_content.html' %}
+{% block content %}
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-12 col-md-12 offset-md-1">
+                <h1>Available Courses</h1>
+                <div class="row">
+                    {% for course in courses %}
+                        <div class="col-lx-3 col-lg-3 col-md-6 col-sm-12">
+                            <div class="card mb-3" style="width: 18rem;min-height: 250px;">
+                                <div class="card-body">
+                                    <h5 class="card-title">{{ course.name }}</h5>
+                                    <h6 class="card-subtitle mb-2 text-muted">Price: ${{ course.price }}</h6>
+                                    <p class="card-text">{{ course.desc }}</p>
+                                    <div class="flex">
+                                        <a href="{% url 'course.edit' course.id %}" class="btn btn-warning">Edit</a>
+                                        <a href="{% url 'course.delete' course.id %}" class="btn btn-danger">Remove</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    {% empty %}
+                        <p>No courses available at the moment.</p>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

@@ -1,0 +1,21 @@
+{% extends 'base_content.html' %}
+{% block content %}
+<div class="container">
+  <div class="row">
+    <div class="col-12">
+      <h1>Welcome back {{ user.username }}! You are a valued {{ user.role }} </h1>
+      {% if user.role == 'Student' %}
+        {% include 'student_dashboard.html' %}
+        <br>
+        <br>
+        <h2>Request a new session</h2>
+        <br>
+        {% include 'sessions/courses_list.html' %}
+      {% elif user.role == 'Tutor' %}
+      {% include 'tutor_dashboard.html' %}
+      {% else %}
+      {% endif %}
+    </div>
+  </div>
+</div>
+{% endblock %}
